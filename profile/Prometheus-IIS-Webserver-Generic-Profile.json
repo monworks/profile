@@ -1,0 +1,304 @@
+{
+  "id": "a80ff907-7f0e-43a3-aa72-0924c4832761",
+  "type": "DEVICE",
+  "name": "Prometheus IIS Web Server Monitoring",
+  "description": "Monitoring profile for IIS Webserver Server by Prometheus Agent",
+  "vendor": "Windows",
+  "osType": "Windows",
+  "family": "Host",
+  "protocol": ".*HOST_POLLING.*",
+  "customerId": "*",
+  "isDefault": true,
+  "locked": true,
+  "origin": "SYSTEM",
+  "status": "ACTIVE",
+  "createdAt": 0,
+  "updatedBy": "SYSTEM",
+  "updatedAt": 1564134496000,
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.file.cache.inventory",
+      "name": "File Cache Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.file.cache.monitoring",
+      "name": "File Cache Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.file.cache.monitoring.usage",
+          "name": "File Cache Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.file.cache.monitoring.usage.alert",
+              "name": "File Cache Monitoring",
+              "type": "File Cache Monitoring",
+              "category": "File Cache",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "File Cache ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_iis_server_file_cache_total_trending",
+        "prometheus_iis_server_file_cache_memory_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.metadata.cache.inventory",
+      "name": "Metadata Cache Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.metadata.cache.monitoring",
+      "name": "Metadata Cache Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.metadata.cache.monitoring.usage",
+          "name": "Metadata Cache Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.metadata.cache.monitoring.usage.alert",
+              "name": "Metadata Cache Monitoring",
+              "type": "Metadata Cache Monitoring",
+              "category": "Metadata Cache",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "Metadata Cache ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_iis_server_metadata_cache_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.cache.inventory",
+      "name": "Uri Cache Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.cache.monitoring",
+      "name": "Uri Cache Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.cache.monitoring.usage",
+          "name": "Uri Cache Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.cache.monitoring.usage.alert",
+              "name": "Uri Cache Monitoring",
+              "type": "Uri Cache Monitoring",
+              "category": "Uri Cache",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "Uri Cache ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_iis_server_uri_cache_items_total_trending",
+        "prometheus_iis_server_uri_cache_hits_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.metrics.inventory",
+      "name": "Uri Metrics Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.metrics.monitoring",
+      "name": "Uri Metrics Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.metrics.monitoring.usage",
+          "name": "Uri Metrics Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.metrics.monitoring.usage.alert",
+              "name": "Uri Metrics Monitoring",
+              "type": "Uri Metrics Monitoring",
+              "category": "Uri Metrics",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "Uri ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_iis_server_connections_total_trending",
+        "prometheus_iis_server_received_bytes_total_trending",
+        "prometheus_iis_server_sent_bytes_total_trending",
+        "prometheus_iis_server_current_non_anonymous_users_trending",
+        "prometheus_iis_server_current_anonymous_users_trending",
+        "prometheus_iis_server_files_received_total_trending",
+        "prometheus_iis_server_files_sent_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.requests.inventory",
+      "name": "Uri Requests Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.requests.monitoring",
+      "name": "Uri Requests Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.requests.monitoring.usage",
+          "name": "Uri Requests Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.iis.server.uri.requests.monitoring.usage.alert",
+              "name": "Uri Requests Monitoring",
+              "type": "Uri Requests Monitoring",
+              "category": "Uri Requests",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "Uri ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_iis_requests_total_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history"
+  ]
+}
