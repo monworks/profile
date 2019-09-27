@@ -1,0 +1,155 @@
+{
+  "id": "694b2d6a-4bb4-412f-ac7b-ab4b5cfbd82e",
+  "type": "DEVICE",
+  "name": "Prometheus MSSQL Server Monitoring",
+  "description": "Monitoring profile for MSSQL Server by Prometheus Agent",
+  "vendor": "Windows",
+  "osType": "Windows",
+  "family": "Host",
+  "protocol": ".*HOST_POLLING.*",
+  "customerId": "*",
+  "isDefault": true,
+  "locked": true,
+  "origin": "SYSTEM",
+  "status": "ACTIVE",
+  "createdAt": 0,
+  "updatedBy": "SYSTEM",
+  "updatedAt": 1569396014,
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.instances.inventory",
+      "name": "MSSQL Instances Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.instances.monitoring",
+      "name": "MSSQL Instances Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.instances.monitoring.usage",
+          "name": "MSSQL Instances Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.instances.monitoring.usage.alert",
+              "name": "MSSQL Instances Monitoring",
+              "type": "MSSQL Instances Monitoring",
+              "category": "MSSQL Instances",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "message": "MSSQL ${metricName} of instance ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mssql_bufman_page_lookups_trending",
+        "prometheus_mssql_bufman_page_reads_trending",
+        "prometheus_mssql_bufman_page_writes_trending",
+        "prometheus_mssql_bufman_page_splits_trending",
+        "prometheus_mssql_lock_memory_bytes_total_trending",
+        "prometheus_mssql_optimizer_memory_bytes_total_trending",
+        "prometheus_mssql_cache_hit_ratio_total_trending",
+        "prometheus_mssql_lock_waits_total_trending",
+        "prometheus_mssql_bufman_page_life_expectancy_total_trending",
+        "prometheus_mssql_user_connections_total_trending",
+        "prometheus_mssql_memory_usage_trending",
+        "prometheus_mssql_cache_pages_trending",
+        "prometheus_mssql_cache_memory_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.metrics.inventory",
+      "name": "MSSQL Metrics Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.metrics.monitoring",
+      "name": "MSSQL Metrics Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.metrics.monitoring.usage",
+          "name": "MSSQL Metrics Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.windows.mssql.server.metrics.monitoring.usage.alert",
+              "name": "MSSQL Metrics Monitoring",
+              "type": "MSSQL Metrics Monitoring",
+              "category": "MSSQL Metrics",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "message": "MSSQL ${componentIdentifier} of ${componentId} ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mssql_databases_active_transactions_trending",
+        "prometheus_mssql_databases_log_used_percent_trending",
+        "prometheus_mssql_databases_xtp_memory_used_trending",
+        "prometheus_mssql_databases_data_files_size_trending",
+        "prometheus_mssql_databases_log_files_size_used_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history"
+  ]
+}
