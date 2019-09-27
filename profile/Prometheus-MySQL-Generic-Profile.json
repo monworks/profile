@@ -1,0 +1,548 @@
+{
+  "id": "a768e240-562d-40fe-ae72-a2e5bc8ad1b6",
+  "type": "DEVICE",
+  "name": "Prometheus MySQL Monitoring",
+  "vendor": "*",
+  "family": "Host",
+  "osType": "Linux",
+  "protocol": ".*HOST_POLLING.*",
+  "isDefault": true,
+  "description": "Monitoring profile for MySQL by Prometheus Agent",
+  "origin": "SYSTEM",
+  "locked": true,
+  "customerId": "*",
+  "status": "ACTIVE",
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.availability.monitoring",
+      "name": "PROMETHEUS Availability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_3_minutes",
+      "scheduleLabel": "Every 3 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.availability.monitoring.metric.availability.percent",
+          "name": "PROMETHEUS Availability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.availability.monitoring.metric.availability.percent.alert",
+              "name": "PROMETHEUS Availability",
+              "type": "PROMETHEUS Availability",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${sysAvailabilityPercent} != ${highWaterMarkValue}",
+                  "clear": "${sysAvailabilityPercent} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "message": "Availability uptime [${sysAvailabilityPercent}%] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "availability_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.icmp_device_availability",
+      "name": "ICMP Device Availability",
+      "type": "reachability",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.icmp_device_availability.metric.reachability",
+          "name": "ICMP Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.icmp_device_availability.metric.reachability.alert",
+              "name": "ICMP Device Reachability(%)",
+              "type": "ICMP Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Device Reachability(%)",
+                  "lowWaterMarkLabel": "Device Reachability(%)",
+                  "message": "Device is unreachable via ICMP"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.reachability.monitoring",
+      "name": "PROMETHEUS Device Reachability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.reachability.monitoring.metric.reachability",
+          "name": "PROMETHEUS Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.reachability.monitoring.metric.reachability.alert",
+              "name": "PROMETHEUS Device Reachability(%)",
+              "type": "PROMETHEUS Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "highWaterMarkLabel": "Device Reachability(%)",
+                  "lowWaterMarkLabel": "Device Reachability(%)",
+                  "message": "Reachability status [${reachabilityStatus}%] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "reachability_trending"
+      ]
+    },
+    {
+      "name": "MySQL Status Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.status.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.status.monitoring",
+      "name": "MySQL Status Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.status.monitoring.metric",
+          "name": "MySQL Status Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.status.monitoring.metric.alert",
+              "name": "MySQL Status Monitoring",
+              "type": "MySQL Status Monitoring",
+              "category": "MySQL Status",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL statements [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_commands_total_trending"
+      ]
+    },
+    {
+      "name": "MySQL Innodb Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.monitoring",
+      "name": "MySQL Innodb Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.monitoring.metric",
+          "name": "MySQL Innodb Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.monitoring.metric.alert",
+              "name": "MySQL Innodb Monitoring",
+              "type": "MySQL Innodb Monitoring",
+              "category": "MySQL Innodb",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Innodb Row Locks [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_innodb_trending"
+      ]
+    },
+    {
+      "name": "MySQL Global Status Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.monitoring",
+      "name": "MySQL Global Status Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.monitoring.metric",
+          "name": "MySQL Global Status Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.monitoring.metric.alert",
+              "name": "MySQL Global Status Monitoring",
+              "type": "MySQL Global Status Monitoring",
+              "category": "MySQL Global Status",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Network Traffic [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_global_status_trending"
+      ]
+    },
+    {
+      "name": "MySQL Global Status Slow Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.slow.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.slow.monitoring",
+      "name": "MySQL Global Status Slow Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.slow.monitoring.metric",
+          "name": "MySQL Global Status Slow Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.global.status.slow.monitoring.metric.alert",
+              "name": "MySQL Global Status Slow Monitoring",
+              "type": "MySQL Global Status Slow Monitoring",
+              "category": "MySQL Global Status Slow",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Queries [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_global_status_slow_trending"
+      ]
+    },
+    {
+      "name": "MySQL Innodb Buffer Pool Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.buffer.pool.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.buffer.pool.monitoring",
+      "name": "MySQL Innodb Buffer Pool Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.buffer.pool.monitoring.metric",
+          "name": "MySQL Innodb Buffer Pool Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.metrics.buffer.pool.monitoring.metric.alert",
+              "name": "MySQL Innodb Buffer Pool Monitoring",
+              "type": "MySQL Innodb Buffer Pool Monitoring",
+              "category": "MySQL Innodb Buffer Pool",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Innodb Buffer Pool [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_innodb_buffer_pool_trending"
+      ]
+    },
+    {
+      "name": "MySQL Innodb Data Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.mysql.innodb.metrics.data.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.mysql.innodb.metrics.data.monitoring",
+      "name": "MySQL Innodb Data Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.mysql.innodb.metrics.data.monitoring.metric",
+          "name": "MySQL Innodb Data Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.mysql.innodb.metrics.data.monitoring.metric.alert",
+              "name": "MySQL Innodb Data Monitoring",
+              "type": "MySQL Innodb Data Monitoring",
+              "category": "MySQL Innodb Data",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Innodb Operations [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_innodb_data_trending"
+      ]
+    },
+    {
+      "name": "MySQL Global Status Buffer Pool Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.mysql.global.status.buffer.pool.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.mysql.global.status.buffer.pool.monitoring",
+      "name": "MySQL Global Status Buffer Pool Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.mysql.global.status.buffer.pool.monitoring.metric",
+          "name": "MySQL Global Status Buffer Pool Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.mysql.global.status.buffer.pool.monitoring.metric.alert",
+              "name": "MySQL Global Status Buffer Pool Monitoring",
+              "type": "MySQL Global Status Buffer Pool Monitoring",
+              "category": "MySQL Global Status Buffer Pool",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Global Status Buffer Pool [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_global_status_buffer_pool_data_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.buffer.pool.requests.monitoring",
+      "name": "MySQL Innodb Buffer Pool Requests Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.buffer.pool.requests.monitoring.metric",
+          "name": "MySQL Innodb Buffer Pool Requests Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.mysql.innodb.buffer.pool.requests.monitoring.metric.alert",
+              "name": "MySQL Innodb Buffer Pool Requests Monitoring",
+              "type": "MySQL Innodb Buffer Pool Requests Monitoring",
+              "category": "MySQL Innodb Buffer Pool Requests",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "MySQL Innodb Buffer Pool Requests [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_mysql_buffer_pool_data_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history"
+  ]
+}
