@@ -1,0 +1,609 @@
+{
+  "id": "381e9466-9312-11e9-a180-00505690620e",
+  "type": "DEVICE",
+  "name": "Prometheus Linux Host Monitoring",
+  "vendor": "*",
+  "family": "Host",
+  "osType": "Linux",
+  "protocol": ".*HOST_POLLING.*",
+  "isDefault": true,
+  "description": "Monitoring profile for Hosts by Prometheus Agent",
+  "origin": "SYSTEM",
+  "locked": true,
+  "customerId": "*",
+  "status": "ACTIVE",
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.icmp_device_availability",
+      "name": "ICMP Device Availability",
+      "type": "reachability",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.icmp_device_availability.metric.reachability",
+          "name": "ICMP Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.icmp_device_availability.metric.reachability.alert",
+              "name": "ICMP Device Reachability(%)",
+              "type": "ICMP Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "message": "Device is unreachable via ICMP"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.reachability.monitoring",
+      "name": "PROMETHEUS Device Reachability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.reachability.monitoring.metric.reachability",
+          "name": "PROMETHEUS Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.reachability.monitoring.metric.reachability.alert",
+              "name": "PROMETHEUS Device Reachability(%)",
+              "type": "PROMETHEUS Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "highWaterMarkLabel": "Device Reachability(%)",
+                  "lowWaterMarkLabel": "Device Reachability(%)",
+                  "message": "Prometheus Reachability status is Down"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring",
+      "name": "PROMETHEUS Availability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_3_minutes",
+      "scheduleLabel": "Every 3 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring.metric.availability.percent",
+          "name": "PROMETHEUS Availability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring.metric.availability.percent.alert",
+              "name": "PROMETHEUS Availability",
+              "type": "PROMETHEUS Availability",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${sysAvailabilityPercent} != ${highWaterMarkValue}",
+                  "clear": "${sysAvailabilityPercent} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "message": "Host is Unavailable"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "availability_trending"
+      ]
+    },
+    {
+      "name": "Cpu Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.linux.cpu.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.cpu.monitoring",
+      "name": "CPU Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.cpu.monitoring.usage",
+          "name": "CPU Utilization(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.cpu.monitoring.usage",
+              "name": "CPU Utilization",
+              "type": "CPU Utilization",
+              "category": "CPU",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${cpmCPUTotal5minRev} > ${highWaterMarkValue}",
+                  "clear": "${cpmCPUTotal5minRev} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MINOR",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "highWaterMarkLabel": "CPU Utilization Exceeds",
+                  "lowWaterMarkLabel": "CPU Utilization Falls below",
+                  "message": "[${physicalEntity}] Utilization of [${cpmCPUTotal5minRev}%] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "cpu_usage_trending_host"
+      ]
+    },
+    {
+      "name": "Memory Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.linux.memory.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.linux.memory.monitoring",
+      "name": "Memory Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.linux.memory.monitoring.usage",
+          "name": "Memory Usage(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.linux.memory.monitoring.usage.alert",
+              "name": "Memory Usage",
+              "type": "Memory Usage",
+              "category": "Memory",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${ciscoMemoryPoolUsedPercent} > ${highWaterMarkValue}",
+                  "clear": "${ciscoMemoryPoolUsedPercent} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MINOR",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "highWaterMarkLabel": "Memory Utilization Exceeds",
+                  "lowWaterMarkLabel": "Memory Utilization Falls below",
+                  "message": "[${componentIdentifier}] usage [${ciscoMemoryPoolUsedPercent}%] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "memory_usage_trending_host"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.disk.filesystem.inventory",
+      "name": "Disk File System Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.disk.filesystem.monitoring",
+      "name": "Disk File Sysytem Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.disk.filesystem.monitoring.usage",
+          "name": "Disk File System Utilization(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.disk.filesystem.monitoring.usage.alert",
+              "name": "Disk File System Utilization",
+              "type": "Disk File System Utilization",
+              "category": "Disk",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${utilization}>${highWaterMarkValue}",
+                  "clear": "${utilization}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Disk Utilization Exceeds",
+                  "lowWaterMarkLabel": "Disk Utilization Falls below",
+                  "message": "Disk Utilization ${utilization}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "disk_usage_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.inventory",
+      "name": "Disk Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.read.bytes.monitoring",
+      "name": "Disk Read Bytes Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.read.bytes.monitoring.metric",
+          "name": "Disk Read Bytes Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.read.bytes.monitoring.alert",
+              "name": "Disk Read Bytes Monitoring",
+              "type": "Disk Read Bytes Monitoring",
+              "category": "Disk Read",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${diskInBytes} > ${highWaterMarkValue}",
+                  "clear": "${diskInBytes} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Read Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Read Bytes Falls below",
+                  "message": "Physcial Disk Read Bytes ${diskInBytes}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_disk_read_bytes_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.write.bytes.monitoring",
+      "name": "Disk Write Bytes Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.write.bytes.monitoring.metric",
+          "name": "Disk Write Bytes Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.physcial.disk.write.bytes.monitoring.metric.alert",
+              "name": "Disk Write Bytes Monitoring",
+              "type": "Disk Write Bytes Monitoring",
+              "category": "Disk Write",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${diskOutBytes} > ${highWaterMarkValue}",
+                  "clear": "${diskOutBytes} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Physcial Disk Write Bytes Exceeds",
+                  "lowWaterMarkLabel": "Physcial Disk Write Bytes Falls below",
+                  "message": "Physcial Disk Write Bytes ${diskOutBytes}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_disk_write_bytes_trending"
+      ]
+    },
+    {
+      "name": "Interface Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.linux.interfaces.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour",
+      "uiComponents": [
+        "device_interface_details"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.interface.management",
+      "name": "Interface Management",
+      "type": "monitoring",
+      "enabled": true,
+      "schedule": "sys_every_4_hours",
+      "scheduleLabel": "Every 4 hours",
+      "contextType": "Interface",
+      "contextId": "Managed-Interfaces"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.interfaces.monitoring",
+      "name": "Interface Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.interfaces.monitoring.metric",
+          "name": "Interface Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.interfaces.monitoring.metric.alert",
+              "name": "Interface Monitoring",
+              "type": "PROMETHEUS_MONITORING",
+              "category": "Interface",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${utilizationIn} > ${highWaterMarkValue}",
+                  "clear": "${utilizationIn} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 3,
+                  "highWaterMarkLabel": "Interface Utilization Exceeds",
+                  "lowWaterMarkLabel": "Interface Utilization Falls below",
+                  "message": "Interface \"${ifDescr}\" utilization [${utilizationIn}%] exceeded configured threshold ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.inventory",
+      "name": "Top Process Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.cpu.monitoring",
+      "name": "Top Process Cpu Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.cpu.monitoring.metric",
+          "name": "Top Process Cpu Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.cpu.monitoring.metric.alert",
+              "name": "Top Process Cpu Monitoring",
+              "type": "Top Process Cpu Monitoring",
+              "category": "Process Cpu",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "CPU utilization for process [${componentIdentifier}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_top_process_cpu_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.memory.monitoring",
+      "name": "Top Process Memory Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.memory.monitoring.metric",
+          "name": "Top Process Memory Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.top.process.memory.monitoring.metric.alert",
+              "name": "Top Process Memory Monitoring",
+              "type": "Top Process Memory Monitoring",
+              "category": "Process Memory",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 85,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "Memory utilization for process [${componentIdentifier}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_top_process_memory_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.load.average.inventory",
+      "name": "Load Average Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.load.average.monitoring",
+      "name": "Load Average Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.load.average.monitoring.metric",
+          "name": "Load Average Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.load.average.monitoring.metric.alert",
+              "name": "Load Average Monitoring",
+              "type": "Load Average Monitoring",
+              "category": "Load Average",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue}>${highWaterMarkValue}",
+                  "clear": "${metricValue}<${lowWaterMarkValue}",
+                  "highWaterMarkValue": 90,
+                  "highWaterMarkLabel": "Load Average Exceeds",
+                  "lowWaterMarkValue": 80,
+                  "lowWaterMarkLabel": "Load Average Falls below",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "severity": "MINOR",
+                  "message": "Load Average [${componentId}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "host_service_top_load_average_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history",
+    "reachability_trending"
+  ]
+}

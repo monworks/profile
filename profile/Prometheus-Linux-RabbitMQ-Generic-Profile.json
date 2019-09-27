@@ -1,0 +1,507 @@
+{
+  "id": "93a7dbbe-0bc6-4d1e-97d9-4a782d1041f0",
+  "type": "DEVICE",
+  "name": "Prometheus RabbitMQ Monitoring Profile",
+  "vendor": "*",
+  "family": "Host",
+  "osType": "*",
+  "protocol": ".*HOST_POLLING.*",
+  "isDefault": true,
+  "description": "Monitoring profile for RabbitMQ",
+  "origin": "SYSTEM",
+  "locked": true,
+  "customerId": "*",
+  "status": "ACTIVE",
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.icmp_device_availability",
+      "name": "ICMP Device Availability",
+      "type": "reachability",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.icmp_device_availability.metric.reachability",
+          "name": "ICMP Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.icmp_device_availability.metric.reachability.alert",
+              "name": "ICMP Device Reachability(%)",
+              "type": "ICMP Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "message": "Device is unreachable via ICMP"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring",
+      "name": "PROMETHEUS Availability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_3_minutes",
+      "scheduleLabel": "Every 3 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring.metric.availability.percent",
+          "name": "PROMETHEUS Availability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.linux.availability.monitoring.metric.availability.percent.alert",
+              "name": "PROMETHEUS Availability",
+              "type": "PROMETHEUS Availability",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${sysAvailabilityPercent} != ${highWaterMarkValue}",
+                  "clear": "${sysAvailabilityPercent} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "message": "Host is Unavailable"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "availability_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.node.inventory",
+      "name": "RabbitMQ Node Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour",
+      "uiComponents": [
+        "rabbitmq_nodes_details"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.node.monitoring",
+      "name": "RabbitMQ Node Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.node.monitoring.metric",
+          "name": "RabbitMQ Node Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.node.monitoring.metric.alert",
+              "name": "RabbitMQ Node Monitoring",
+              "type": "RabbitMQ Node Monitoring",
+              "category": "RabbitMQ Node",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "Node [${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.total.inventory",
+      "name": "Rabbitmq Exchange Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.total.monitoring",
+      "name": "RabbitMQ Exchange Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.total.monitoring.metric",
+          "name": "RabbitMQ Exchange Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.total.monitoring.metric.alert",
+              "name": "RabbitMQ Exchange Monitoring",
+              "type": "RabbitMQ Exchange Monitoring",
+              "category": "RabbitMQ Exchange",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "Exchange [${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_exchange_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.inventory",
+      "name": "Rabbitmq Queue Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.monitoring",
+      "name": "RabbitMQ Queue Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.monitoring.metric",
+          "name": "RabbitMQ Queue Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.monitoring.metric.alert",
+              "name": "RabbitMQ Queue Monitoring",
+              "type": "RabbitMQ Queue Monitoring",
+              "category": "RabbitMQ Queue",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "[${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_queue_total_trending",
+        "prometheus_rabbitmq_queue_messages_ready_trending",
+        "prometheus_rabbitmq_queue_messages_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.metric.inventory",
+      "name": "Rabbitmq Queue Metrics Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.metric.monitoring",
+      "name": "RabbitMQ Queue Metrics Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.metric.monitoring.metric",
+          "name": "RabbitMQ Queue Metrics Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.queue.metric.monitoring.metric.alert",
+              "name": "RabbitMQ Queue Metrics Monitoring",
+              "type": "RabbitMQ Queue Metrics Monitoring",
+              "category": "RabbitMQ Queue Metrics",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "[${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_queue_messages_delivered_total_trending",
+        "prometheus_rabbitmq_queue_messages_unacknowledged_trending",
+        "prometheus_rabbitmq_queue_total_memory_trending",
+        "prometheus_rabbitmq_queue_consumers_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.connections.inventory",
+      "name": "Rabbitmq Connections Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.connections.monitoring",
+      "name": "RabbitMQ Connections Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.connections.monitoring.metric",
+          "name": "RabbitMQ Connections Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.connections.monitoring.metric.alert",
+              "name": "RabbitMQ Connections Monitoring",
+              "type": "RabbitMQ Connections Monitoring",
+              "category": "RabbitMQ Connections",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "Total Connections [${metricValue}] exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_connections_total_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.reachability.monitoring",
+      "name": "RabbitMQ Device Reachability",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_1_minute",
+      "scheduleLabel": "Every 1 minute",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.reachability.monitoring.metric.reachability",
+          "name": "RabbitMQ Device Reachability(%)",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.reachability.monitoring.metric.reachability.alert",
+              "name": "RabbitMQ Device Reachability(%)",
+              "type": "RabbitMQ Device Reachability(%)",
+              "category": "Device",
+              "clazz": "threshold",
+              "enabled": true,
+              "criteria": [
+                {
+                  "active": "${reachabilityStatus} != ${highWaterMarkValue}",
+                  "clear": "${reachabilityStatus} == ${highWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 100,
+                  "lowWaterMarkValue": 100,
+                  "severity": "CRITICAL",
+                  "minimumOccurrence": 3,
+                  "clearOnInactivitySeconds": 0,
+                  "highWaterMarkLabel": "Device Reachability(%)",
+                  "lowWaterMarkLabel": "Device Reachability(%)",
+                  "message": "[${type}] Reachability status is Down"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.io.inventory",
+      "name": "Rabbitmq ExchangeIo Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.io.monitoring",
+      "name": "RabbitMQ ExchangeIo Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.io.monitoring.metric",
+          "name": "RabbitMQ ExchangeIo Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.exchange.io.monitoring.metric.alert",
+              "name": "RabbitMQ ExchangeIo Monitoring",
+              "type": "RabbitMQ ExchangeIo Monitoring",
+              "category": "RabbitMQ ExchangeIo",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "ExchangeIo [${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_exchange_msg_published_in_trending",
+        "prometheus_rabbitmq_exchange_msg_published_out_trending"
+      ]
+    },
+    {
+      "name": "Consumers Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.consumers.total.inventory",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.consumers.total.monitoring",
+      "name": "RabbitMQ Consumers Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.consumers.total.monitoring.metric",
+          "name": "RabbitMQ Exchange Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.rabbitmq.consumers.total.monitoring.metric.alert",
+              "name": "RabbitMQ Consumers Monitoring",
+              "type": "RabbitMQ Consumers Monitoring",
+              "category": "RabbitMQ Consumers",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} > ${highWaterMarkValue}",
+                  "clear": "${metricValue} < ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 90,
+                  "lowWaterMarkValue": 80,
+                  "minimumOccurrence": 3,
+                  "severity": "MINOR",
+                  "message": "Consumers [${componentId}] ${metricValue} exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_rabbitmq_consumers_total_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history",
+    "reachability_trending"
+  ]
+}
