@@ -1,0 +1,154 @@
+{
+  "id": "11c71fe5-36b7-459a-9d2e-3289425d4b4f",
+  "type": "DEVICE",
+  "name": "Prometheus PostgreSQL Database Monitoring",
+  "description": "Monitoring profile for PostgreSQL Database by Prometheus Agent",
+  "vendor": "*",
+  "osType": "*",
+  "family": "Database",
+  "protocol": "*",
+  "customerId": "*",
+  "isDefault": true,
+  "locked": true,
+  "origin": "SYSTEM",
+  "status": "ACTIVE",
+  "createdAt": 0,
+  "updatedBy": "SYSTEM",
+  "updatedAt": 1569396014,
+  "features": [
+    {
+      "name": "Prometheus Metric Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus_agent_metric_monitoring.generic",
+          "name": "Prometheus Metric Inventory",
+          "enabled": true
+        }
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.metrics.inventory",
+      "name": "PostgreSQL Metrics Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.metrics.monitoring",
+      "name": "PostgreSQL Metrics Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.metrics.monitoring.usage",
+          "name": "PostgreSQL Metrics Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.metrics.monitoring.usage.alert",
+              "name": "PostgreSQL Metrics Monitoring",
+              "type": "PostgreSQL Metrics Monitoring",
+              "category": "PostgreSQL Metrics",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} < ${highWaterMarkValue}",
+                  "clear": "${metricValue} > ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 95,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 1,
+                  "message": "Postgres of ${componentId} of ${metricName} is ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_postgresql_database_metrics_delete_trending",
+        "prometheus_postgresql_database_metrics_fetched_trending",
+        "prometheus_postgresql_database_metrics_inserted_trending",
+        "prometheus_postgresql_database_metrics_returned_trending",
+        "prometheus_postgresql_database_metrics_updated_trending",
+        "prometheus_postgresql_database_metrics_locks_trending",
+        "prometheus_postgresql_database_metrics_DeadLocks_trending",
+        "prometheus_postgresql_database_metrics_commit_trending",
+        "prometheus_postgresql_database_metrics_rollback_trending",
+        "prometheus_postgresql_database_metrics_numbackends_trending",
+        "prometheus_postgresql_database_metrics_blks_hit_trending",
+        "prometheus_postgresql_database_metrics_blks_read_trending"
+      ]
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.checkpoint.metrics.inventory",
+      "name": "PostgreSQL Checkpoint Inventory",
+      "type": "PROMETHEUS_INVENTORY",
+      "enabled": true,
+      "schedule": "sys_every_1_hr",
+      "scheduleLabel": "Every 1 hour"
+    },
+    {
+      "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.checkpoint.metrics.monitoring",
+      "name": "PostgreSQL Checkpoint Monitoring",
+      "type": "PROMETHEUS_MONITORING",
+      "enabled": true,
+      "schedule": "sys_every_5_minutes",
+      "scheduleLabel": "Every 5 minutes",
+      "metrics": [
+        {
+          "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.checkpoint.metrics.monitoring.usage",
+          "name": "PostgreSQL Checkpoint Monitoring",
+          "enabled": true,
+          "alerts": [
+            {
+              "id": "io.macaw.feature.generic.prometheus.host.postgresql.database.checkpoint.metrics.monitoring.usage.alert",
+              "name": "PostgreSQL Checkpoint Monitoring",
+              "type": "PostgreSQL Checkpoint Monitoring",
+              "category": "PostgreSQL Checkpoint",
+              "clazz": "threshold",
+              "enabled": false,
+              "criteria": [
+                {
+                  "active": "${metricValue} < ${highWaterMarkValue}",
+                  "clear": "${metricValue} > ${lowWaterMarkValue}",
+                  "highWaterMarkPercent": 0,
+                  "lowWaterMarkPercent": 0,
+                  "highWaterMarkValue": 95,
+                  "lowWaterMarkValue": 85,
+                  "severity": "MAJOR",
+                  "minimumOccurrence": 1,
+                  "message": "Postgres of ${metricName} is ${metricValue}% exceeded configured value ${highWaterMarkValue}%"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "uiComponents": [
+        "prometheus_postgresql_database_checkpoints_requests_total_trending",
+        "prometheus_postgresql_database_checkpoints_timed_trending",
+        "prometheus_postgresql_database_buffers_checkpoints_trending",
+        "prometheus_postgresql_database_buffers_clean_trending",
+        "prometheus_postgresql_database_buffers_backend_trending"
+      ]
+    }
+  ],
+  "uiComponents": [
+    "device_summary_details",
+    "alarms_summary_by_severity",
+    "device_alarms_details",
+    "device_alarms_history"
+  ]
+}
